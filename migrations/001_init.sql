@@ -1,0 +1,25 @@
+-- USERS
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- PROJECTS  
+CREATE TABLE projects (
+  id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(id) ON DELETE CASCADE,
+  title VARCHAR(200) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- TASKS
+CREATE TABLE tasks (
+  id SERIAL PRIMARY KEY,
+  project_id INT REFERENCES projects(id) ON DELETE CASCADE,
+  user_id INT REFERENCES users(id) ON DELETE SET NULL,
+  title VARCHAR(200) NOT NULL,
+  status VARCHAR(50) DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT NOW()
+);
